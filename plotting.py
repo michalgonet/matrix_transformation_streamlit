@@ -1,5 +1,4 @@
-# import matplotlib.pyplot as plt
-import matplotlib as mpl
+import matplotlib.pyplot as plt
 
 import const
 import classes
@@ -9,7 +8,7 @@ def plot_transformation(
         transformation: classes.Transformation,
         vectors: bool,
         annotations: bool,
-) -> mpl.pyplot:
+) -> plt:
     """
     Funtion for show transformations of triangle
     Parameters
@@ -41,7 +40,7 @@ def plot_transformation(
     new_x_coords, new_y_coords = zip(*transformed_coordinates)
 
     # Customized the plot
-    fig, ax = mpl.pyplot.subplots()
+    fig, ax = plt.subplots()
     fig.set_facecolor(const.PLOT_BG_COLOR)
     ax.set_facecolor(const.PLOT_FG_COLOR)
     ax.xaxis.label.set_color(const.PLOT_TICK_COLOR)
@@ -52,55 +51,41 @@ def plot_transformation(
     ax.locator_params(axis='y', nbins=const.NUMBER_OF_TICKS)
 
     # Plot the original triangle
-    mpl.pyplot.plot(x_coords, y_coords, marker='o', linewidth=2, color=const.PLOT_ORG_COLOR)
+    plt.plot(x_coords, y_coords, marker='o', linewidth=2, color=const.PLOT_ORG_COLOR)
     ax.fill(x_coords, y_coords, color=const.PLOT_ORG_COLOR, alpha=const.PLOT_ALPHA)
 
     # Plot the transformed triangle
-    mpl.pyplot.plot(new_x_coords, new_y_coords, marker='o', linewidth=2, color=const.PLOT_TRANSFORMED_COLOR)
+    plt.plot(new_x_coords, new_y_coords, marker='o', linewidth=2, color=const.PLOT_TRANSFORMED_COLOR)
     ax.fill(new_x_coords, new_y_coords, color=const.PLOT_TRANSFORMED_COLOR, alpha=const.PLOT_ALPHA)
 
     if annotations:
         # Annotate the original vertices
         for (x, y), pos in zip(original_coordinates, const.ANNOTATION_POS):
-            mpl.pyplot.annotate(f'({x},{y})', (x, y), textcoords="offset points", xytext=pos, ha='center',
-                                color='white',
-                                size=7)
+            plt.annotate(f'({x},{y})', (x, y), textcoords="offset points", xytext=pos, ha='center', color='white',
+                         size=7)
 
         # Annotate the transformed vertices
         for (x, y), pos in zip(transformed_coordinates, const.ANNOTATION_POS):
-            mpl.pyplot.annotate(f'({round(x, 1)},{round(y, 1)})', (x, y), textcoords="offset points", xytext=pos,
-                                ha='center',
-                                color='white', size=7)
+            plt.annotate(f'({round(x, 1)},{round(y, 1)})', (x, y), textcoords="offset points", xytext=pos, ha='center',
+                         color='white', size=7)
 
     if vectors:
         # Plot vectors from the origin to original vertices
         for (x, y) in original_coordinates:
-            mpl.pyplot.quiver(0, 0, x, y, angles='xy', scale_units='xy', scale=1, color=const.PLOT_VECTOR_ORG_COLOR)
+            plt.quiver(0, 0, x, y, angles='xy', scale_units='xy', scale=1, color=const.PLOT_VECTOR_ORG_COLOR)
 
         # Plot vectors from the origin to transformed vertices
         for (x, y) in transformed_coordinates:
-            mpl.pyplot.quiver(0, 0, x, y, angles='xy', scale_units='xy', scale=1,
-                              color=const.PLOT_VECTOR_TRANSFORMED_COLOR)
+            plt.quiver(0, 0, x, y, angles='xy', scale_units='xy', scale=1, color=const.PLOT_VECTOR_TRANSFORMED_COLOR)
 
     # Set plot limits, labels, and grid
-    mpl.pyplot.axis('square')
-    mpl.pyplot.xlim(const.X_LIMIT)
-    mpl.pyplot.ylim(const.Y_LIMIT)
-    mpl.pyplot.yticks(fontsize=const.TICK_FONT_SIZE)
-    mpl.pyplot.xticks(fontsize=const.TICK_FONT_SIZE)
-    mpl.pyplot.xlabel('X')
-    mpl.pyplot.ylabel('Y')
-    mpl.pyplot.grid()
+    plt.axis('square')
+    plt.xlim(const.X_LIMIT)
+    plt.ylim(const.Y_LIMIT)
+    plt.yticks(fontsize=const.TICK_FONT_SIZE)
+    plt.xticks(fontsize=const.TICK_FONT_SIZE)
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.grid()
 
-    return mpl.pyplot
-
-#
-#
-#     col = st.columns(2)
-#     with col[0]:
-#         sx = st.number_input('SX ', min_value=None, max_value=None, value=1)
-#     with col[1]:
-#         sy = st.number_input('SY', min_value=None, max_value=None, value=2)
-#
-#     st.write("Set angle for rotation (deg).")
-#     theta = st.number_input('THETA ', min_value=None, max_value=None, value=45)
+    return fig

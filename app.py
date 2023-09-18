@@ -70,9 +70,9 @@ def apply_transformation(vertices, transformation_matrix, title):
     vectors = st.checkbox("Show Vectors", value=False)
     annotations = st.checkbox("Show Annotations", value=False)
     triangles = classes.Transformation(original=original_triangle, transformed=transformed_triangle)
-    plt = plotting.plot_transformation(triangles, vectors, annotations)
+    fig = plotting.plot_transformation(triangles, vectors, annotations)
     st.write(title)
-    st.pyplot(plt)
+    st.pyplot(fig)
 
 
 if __name__ == "__main__":
